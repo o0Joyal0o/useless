@@ -1,0 +1,25 @@
+{
+  "name": "fun-calendar-project",
+  "version": "1.0.0",
+  "description": "A fun interactive calendar project that allows users to select numbers by clicking on calendar days.",
+  "main": "src/scripts/calendar.js",
+  "scripts": {
+    "start": "live-server src",
+    "build": "tsc"
+  },
+  "keywords": [
+    "calendar",
+    "fun",
+    "interactive",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
