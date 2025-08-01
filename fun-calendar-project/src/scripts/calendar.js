@@ -1,54 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const calendarContainer = document.getElementById('calendar');
-    const selectedNumberDisplay = document.getElementById('selected-number');
-    let selectedNumber = null;
+    // Create an ordered array of numbers 1 to 31
+    const dayValues = Array.from({length: 31}, (_, i) => i + 1);
 
-    // Create a simple calendar for the current month
-    function createCalendar() {
-        const date = new Date();
-        const month = date.getMonth();
-        const year = date.getFullYear();
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysContainer = document.getElementById('days');
+    daysContainer.innerHTML = '';
+    dayValues.forEach((val, idx) => {
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'day';
+        dayDiv.setAttribute('data-index', idx);
+        dayDiv.textContent = val;
+        daysContainer.appendChild(dayDiv);
+    });
 
-        let calendarHTML = '<div class="calendar-grid">';
-        
-        // Add empty cells for days before the first day of the month
-        for (let i = 0; i < firstDay; i++) {
-            calendarHTML += '<div class="calendar-cell empty"></div>';
-        }
+    const dayCells = Array.from(document.querySelectorAll('.day'));
+    dayCells.forEach((cell, idx) => {
+        cell.addEventListener('click', () => {
+            // Pick a random cell (not the clicked one)
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * dayCells.length);
+            } while (randomIndex === idx);
 
-        // Add days of the month
-        for (let day = 1; day <= daysInMonth; day++) {
-            calendarHTML += `<div class="calendar-cell" data-day="${day}">${day}</div>`;
-        }
+            // Swap values
+            const temp = cell.textContent;
+            cell.textContent = dayCells[randomIndex].textContent;
+            dayCells[randomIndex].textContent = temp;
 
-        calendarHTML += '</div>';
-        calendarContainer.innerHTML = calendarHTML;
-
-        // Add click event listeners to each day
-        const dayCells = document.querySelectorAll('.calendar-cell:not(.empty)');
-        dayCells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                selectNumber(cell.dataset.day);
-            });
+            // Highlight selected
+            dayCells.forEach(d => d.classList.remove('selected'));
+            cell.classList.add('selected');
+            cell.style.boxShadow = "0 0 20px 5px #ffcc00";
+            setTimeout(() => {
+                cell.style.boxShadow = "";
+            }, 800);
         });
-    }
-
-    // Function to handle number selection
-    function selectNumber(day) {
-        if (selectedNumber === day) {
-            selectedNumber = null; // Deselect if the same day is clicked
-        } else {
-            selectedNumber = day; // Select the new day
-        }
-        updateSelectedNumberDisplay();
-    }
-
-    // Update the display of the selected number
-    function updateSelectedNumberDisplay() {
-        selectedNumberDisplay.textContent = selectedNumber ? `Selected Day: ${selectedNumber}` : 'No Day Selected';
-    }
-
-    createCalendar();
+    });
 });
