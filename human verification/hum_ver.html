@@ -88,12 +88,20 @@
                 yellowIndexes.length = 0;
                 newYellowIndexes.forEach(idx => yellowIndexes.push(idx));
 
-                message.textContent = "Oops! You are colour blind or something 😂";
+                // Messages to show on each successful verification
+                const successMessages = [
+                    "na I am not convinced that you are human",
+                    "still no try again",
+                    "alright one more time"
+                ];
+                // Show next message based on attempts
+                message.textContent = successMessages[attempts % successMessages.length];
+                attempts++;
                 attempts = 0; // Reset attempts on success
             } else {
                 attempts++;
                 message.textContent = "Try again! Select ALL yellow cells only.";
-                if (attempts >= 3) {
+                if (attempts >= 1) {
                     window.location.href = "../last_page.html/lastpage.html"; // Change to your actual last page
                 }
             }

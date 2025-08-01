@@ -4,46 +4,66 @@
     <title>DO NOT PRESS THE BUTTON</title>
     <style>
         body {
-            background: linear-gradient(45deg, #310223, #221313 100%);
-            text-align: center;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #fffbe7 0%, #ff9800 100%);
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
-            transition: background 0.3s;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 32px 32px 32px;
+            text-align: center;
         }
         h1 {
-            color: #000;
-            margin-top: 20px;
+            color: #e65100;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+        .subtitle {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 400;
         }
         .big-button {
-            font-size: 2em;
-            padding: 20px 40px;
-            margin-top: 30px;
-            background: #ff9800;
+            font-size: 1.5em;
+            padding: 18px 36px;
+            margin-top: 20px;
+            background: linear-gradient(90deg, #ff9800 60%, #ffb74d 100%);
             color: #fff;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s;
-            position: relative; /* For moving effect */
+            box-shadow: 0 2px 8px rgba(255,152,0,0.15);
+            transition: background 0.2s, transform 0.2s;
+            position: relative;
         }
         .big-button:hover {
-            background: #e65100;
+            background: linear-gradient(90deg, #e65100 60%, #ff9800 100%);
+            transform: scale(1.05);
         }
         #message {
-            margin-top: 20px;
-            font-size: 1.5em;
-            color: #fff;
+            margin-top: 28px;
+            font-size: 1.3em;
+            color: #e65100;
             min-height: 2em;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
-    <h1>Press The Button Below To Schedule Your Time</h1>
-    <button class="big-button" id="runaway-btn">DO NOT PRESS THIS BUTTON</button>
-    <div id="message"></div>
-
+    <div class="container">
+        <h1>Let's Schedule Your Time</h1>
+        <h2 class="subtitle">Press the button below to begin your scheduling journey</h2>
+        <button class="big-button" id="runaway-btn">DO NOT PRESS THIS BUTTON</button>
+        <div id="message"></div>
+    </div>
     <script>
         const btn = document.getElementById('runaway-btn');
         const msgDiv = document.getElementById('message');
