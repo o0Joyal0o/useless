@@ -1,6 +1,103 @@
-<body> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Human or Not - lolo</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 32px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(5, 60px); gap: 16px; justify-content: center; margin: 32px 0; }
+        .cell { width: 60px; height: 60px; border-radius: 8px; cursor: pointer; border: 2px solid #eee; transition: box-shadow 0.2s, border 0.2s; }
+        .cell.selected { box-shadow: 0 0 12px 2px #ffeb3b; border: 2px solid #ffeb3b; }
+        #proceed-btn { padding: 12px 32px; font-size: 1.1em; background: #4caf50; color: #fff; border: none; border-radius: 8px; cursor: pointer; margin-top: 24px; }
+        #message { font-size: 1.2em; margin-top: 20px; color: #e65100; }
+    </style>
+</head>
+<body>
     <div class="container">
-        <h1>Human Verification</h1>
-        <p id="message" data-count="0">Click the button below to prove you're human!</p>
-        <button id="action-btn">Click Me!</button>
+        <h1>Human or Not - lolo</h1>
+        <p id="instructions">Select <b>all yellow</b> cells and click Proceed!</p>
+        <div class="grid" id="color-grid"></div>
+        <button id="proceed-btn">Proceed</button>
+        <div id="message"></div>
+    </div>
+    <script>
+        // Generate grid with random colors, some yellow
+        const grid = document.getElementById('color-grid');
+        const proceedBtn = document.getElementById('proceed-btn');
+        const message = document.getElementById('message');
+        const colors = ['#ffeb3b', '#f44336', '#2196f3', '#4caf50', '#9c27b0', '#ff9800', '#00bcd4'];
+        let cellColors = [];
+        let yellowIndexes = [];
+
+        // Create 25 cells, at least 5 yellow
+        for (let i = 0; i < 25; i++) {
+            let color = colors[Math.floor(Math.random() * colors.length)];
+            cellColors.push(color);
+        }
+        // Ensure at least 5 yellow
+        for (let i = 0; i < 5; i++) {
+            cellColors[i] = '#ffeb3b';
+        }
+        cellColors = cellColors.sort(() => Math.random() - 0.5);
+
+        // Render cells
+        cellColors.forEach((color, idx) => {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.style.background = color;
+            cell.dataset.index = idx;
+            if (color === '#ffeb3b') yellowIndexes.push(idx);
+            cell.onclick = function() {
+                cell.classList.toggle('selected');
+            };
+            grid.appendChild(cell);
+        });
+
+        let attempts = 0;
+
+        proceedBtn.onclick = function() {
+            // Check if all yellow cells are selected
+            const selected = Array.from(document.querySelectorAll('.cell.selected')).map(c => +c.dataset.index);
+            const allYellowSelected = yellowIndexes.every(idx => selected.includes(idx));
+            if (allYellowSelected && selected.length === yellowIndexes.length) {
+                // Move yellow color to new random cells and mock user
+                yellowIndexes.forEach(idx => {
+                    const cell = grid.children[idx];
+                    let newColor;
+                    do {
+                        newColor = colors[Math.floor(Math.random() * colors.length)];
+                    } while (newColor === '#ffeb3b');
+                    cell.style.background = newColor;
+                    cell.classList.remove('selected');
+                });
+
+                // Pick new random indexes for yellow cells
+                let newYellowIndexes = [];
+                while (newYellowIndexes.length < yellowIndexes.length) {
+                    let randIdx = Math.floor(Math.random() * 25);
+                    if (!newYellowIndexes.includes(randIdx)) {
+                        newYellowIndexes.push(randIdx);
+                    }
+                }
+                newYellowIndexes.forEach(idx => {
+                    grid.children[idx].style.background = '#ffeb3b';
+                });
+
+                // Update yellowIndexes for next round
+                yellowIndexes.length = 0;
+                newYellowIndexes.forEach(idx => yellowIndexes.push(idx));
+
+                message.textContent = "Oops! You are colour blind or something 😂";
+                attempts = 0; // Reset attempts on success
+            } else {
+                attempts++;
+                message.textContent = "Try again! Select ALL yellow cells only.";
+                if (attempts >= 3) {
+                    window.location.href = "../last_page.html/lastpage.html"; // Change to your actual last page
+                }
+            }
+        };
+    </script>
 </body>
+</html>

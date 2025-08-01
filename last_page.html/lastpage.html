@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule Success!</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; }
+        .container { max-width: 500px; margin: 80px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 40px; text-align: center; }
+        .big-date { font-size: 2em; color: #4caf50; margin: 24px 0; }
+        .mock { font-size: 1.2em; color: #e65100; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 You have been successfully scheduled! 🎉</h1>
+        <div class="big-date" id="future-date"></div>
+        <div class="mock" id="mock-message"></div>
+    </div>
+    <script>
+        // Get today's date
+        const today = new Date();
+        // Add 100-150 years randomly
+        const yearsToAdd = 100 + Math.floor(Math.random() * 51);
+        const future = new Date(today.getFullYear() + yearsToAdd, today.getMonth(), today.getDate());
+        // Format date
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('future-date').textContent = `Your scheduled date: ${future.toLocaleDateString(undefined, options)}`;
+        document.getElementById('mock-message').textContent = `Let's see if you'll be alive till then... 😂 (${yearsToAdd} years from now!)`;
+    </script>
+</body>
+</html>
