@@ -1,0 +1,126 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SCHEDULE YOUR TIME</title>
+  
+    <style>
+        .big-button {
+            font-size: 2em;
+            padding: 20px 40px;
+            margin-top: 30px;
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .big-button:hover {
+            background: #e65100;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <button class="big-button" id="runaway-btn" onclick="doNothing()">DO NOT PRESS THIS BUTTON</button>
+    <div id="message"></div>
+    <script>
+        const btn = document.getElementById('runaway-btn');
+        const msgDiv = document.getElementById('message');
+        const buttonTexts = [
+            "if you want to shedule your time catch me",
+            "I am not going to stop",
+            "DO NOT PRESS THIS BUTTON",
+            
+        ];
+        const messages = [
+            "I told you not to press it!",
+            "Still nothing happened.",
+            "Seriously, stop pressing.",
+            "Okay, now you're just being stubborn.",
+            "Fine, you win. But nothing will happen.",
+            "You are persistent!",
+            "Is this fun for you?",
+            "Try harder!",
+            "Almost there...",
+            "You win! 🎉"
+        ];
+
+        function flashBackground() {
+            const orig = document.body.style.backgroundColor;
+            document.body.style.backgroundColor = "#ffeb3b";
+            setTimeout(() => {
+                document.body.style.backgroundColor = orig;
+            }, 200);
+        }
+
+        function doNothing() {
+            let count = parseInt(msgDiv.getAttribute('data-count')) || 0;
+            msgDiv.textContent = messages[count % messages.length];
+            msgDiv.setAttribute('data-count', count + 1);
+
+            // Change button text
+            btn.textContent = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
+
+            // Flash background
+            flashBackground();
+
+            // Redirect after 3 clicks
+            if (count + 1 === 3) {
+                window.location.href = "https://example.com"; // Change to your desired URL or page
+                return;
+            }
+
+            // Confetti effect if clicked 10 times
+            if (count + 1 === 10) {
+                msgDiv.textContent = "🎉 YOU WIN! 🎉";
+                confetti();
+            }
+
+            moveButton();
+        }
+
+        function moveButton() {
+            const btnRect = btn.getBoundingClientRect();
+            const maxX = window.innerWidth - btnRect.width - 20;
+            const maxY = window.innerHeight - btnRect.height - 20;
+            const randX = Math.floor(Math.random() * maxX);
+            const randY = Math.floor(Math.random() * maxY);
+            btn.style.position = 'absolute';
+            btn.style.left = randX + 'px';
+            btn.style.top = randY + 'px';
+        }
+
+        btn.addEventListener('mouseover', moveButton);
+
+        // Simple confetti effect
+        function confetti() {
+            for (let i = 0; i < 100; i++) {
+                const conf = document.createElement('div');
+                conf.style.position = 'fixed';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-10px';
+                conf.style.width = '8px';
+                conf.style.height = '8px';
+                conf.style.background = `hsl(${Math.random()*360},100%,50%)`;
+                conf.style.borderRadius = '50%';
+                conf.style.opacity = 0.8;
+                conf.style.zIndex = 9999;
+                conf.style.transition = 'top 2s linear';
+                document.body.appendChild(conf);
+                setTimeout(() => {
+                    conf.style.top = '100vh';
+                }, 10);
+                setTimeout(() => {
+                    conf.remove();
+                }, 2100);
+            }
+        }
+    </script>
+</body>
+</html>
