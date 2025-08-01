@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
   <title>Time and Date Setter</title>
   <style>
     body {
@@ -23,19 +24,16 @@
   </style>
 </head>
 <body>
-  <h1>Set Time and Date</h1>
-  <label for="hour">Hour (0-23):</label>
-  <input type="number" id="hour" min="0" max="23" />
-
-  <label for="minute">Minute (0-59):</label>
-  <input type="number" id="minute" min="0" max="59" />
-
-  <label for="inputDate">Input Date (YYYY-MM-DD):</label>
-  <input type="date" id="inputDate" />
-
-  <button id="resetBtn">Reset</button>
-
-  <div id="date">Date: --/--/---- Time: --:--</div>
+    <div class="container">
+      <div class="input-row">
+        <label for="month">Month :</label>
+        <input type="number" id="month"  />
+      </div>
+      <div class="input-row">
+        <label for="year">Year :</label>
+        <input type="number" id="year" />
+      </div>
+    </div>
 
   <script>
     const hourInput = document.getElementById('hour');
